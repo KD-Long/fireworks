@@ -1,9 +1,10 @@
 import React, { useRef } from 'react'
-import { extend, useFrame } from '@react-three/fiber';
+import { extend, useFrame, useThree } from '@react-three/fiber';
 import { Perf } from 'r3f-perf'
 import { useControls } from 'leva'
 import { shaderMaterial, useTexture, OrbitControls, Environment, Icosahedron, GizmoHelper, GizmoViewport } from '@react-three/drei';
 import * as THREE from 'three'
+
 
 import vertexShader from '../shaders/vertex.glsl'
 import fragmentShader from '../shaders/fragment.glsl'
@@ -11,11 +12,9 @@ import Firework from './Firework';
 
 const Experience = () => {
 
-    const sphereRef = useRef()
-
     // leav controls
-    let { rotation } = useControls({
-        rotation: { value: 1.0, min: 0.01, max: 5.0, step: 0.01 },
+    let { sizeMulti } = useControls({
+        sizeMulti: { value: 1.0, min: 0.1, max: 10.0, step: 0.1 },
         // value: { value: 0.5, min: 0.0, max: 1.0, step: 0.001 },
 
     });
@@ -46,19 +45,19 @@ const Experience = () => {
         </GizmoHelper>
 
         {/* Sets background */}
-        {/* <color args={['#1d1f2a']} attach='background' /> */}
-        <Environment
+        <color args={['#1d1f2a']} attach='background' />
+        {/* <Environment
             // background lighting env map
             preset="city"
             background={true} // this uses the HDR as background as well as env map for lighting
             backgroundBlurriness={0.5}
-        />
+        /> */}
 
 
 
         {/* fireworks */}
 
-        <Firework count={111} position={[0, 0, 0]} />
+        <Firework count={111} position={[0, 0, 0]} uSize={0.15} sizeMulti={sizeMulti} />
 
 
 
